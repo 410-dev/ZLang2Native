@@ -42,7 +42,7 @@ public class ScriptFile {
         for (int i = 0; i < lines.size(); i++) {
             line = lines.get(i);
 
-            if (line.contains("export -f")) {
+            if (line.contains("export -f") && !line.startsWith("#") && !Main.hasParameter(null, "-b")) {
                 throw new LibraryImportException(path, line, "Syntax 'export -f' is not supported");
             }
 
@@ -196,7 +196,8 @@ public class ScriptFile {
         String[] lines = this.builtString.split("\n");
         builtString = "";
         StringBuilder sb2 = new StringBuilder();
-        sb2.append("#!/bin/zsh");
+        if (Main.hasParameter(null, "-b")) sb2.append("#!/bin/bash");
+        else sb2.append("#!/bin/zsh");
         sb2.append("\n");
         for (String line : lines) {
             boolean isLineEmpty = line.trim().replaceAll(" ", "").equals("");

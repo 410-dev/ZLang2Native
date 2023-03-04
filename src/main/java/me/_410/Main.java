@@ -13,13 +13,16 @@ public class Main {
     public static final String[] extensionI = {".zlang", ".zsh", ".sh", ".ebash"};
     public static final String extensionLib = ".ebsrc";
     public static final String extensionBase = ".zlangbase";
-    public static final String VERSION = "1.0.0";
+    public static final String VERSION = "1.0.1 ";
 
     public static boolean leaveComments = false;
     public static boolean leaveEmptyLines = false;
     public static boolean printStackTrace = false;
 
+    private static String[] args;
+
     private static String getParameter(String[] args, String parameter) {
+        if (args == null) args = Main.args;
         for (int i = 0; i < args.length; i++) {
             if (args[i].equals(parameter)) {
                 if (i + 1 < args.length) {
@@ -32,7 +35,8 @@ public class Main {
         return "";
     }
 
-    private static boolean hasParameter(String[] args, String parameter) {
+    public static boolean hasParameter(String[] args, String parameter) {
+        if (args == null) args = Main.args;
         for (String arg : args) {
             if (arg.equals(parameter)) {
                 return true;
@@ -142,16 +146,19 @@ public class Main {
     }
 
     public static void main(String[] args) throws LibraryImportException, FileNotFoundException {
-        System.out.println("ZLang2Native Translator " + VERSION);
 
         // Required parameters: -i <input>
         // Optional parameters: -o <output> -l <library path> -c -e
 
+        Main.args = args;
+
         if (hasParameter(args, "help")) {
+            System.out.println("ZLang2Native Translator " + VERSION);
             System.out.println("Required: -i <input>");
-            System.out.println("Optional: -o <output> -l <library path> -c -e");
+            System.out.println("Optional: -o <output> -l <library path> -c -e -b");
             System.out.println("-c: Leave comments");
             System.out.println("-e: Leave empty lines");
+            System.out.println("-b: Use bash version instead of zsh");
             return;
         }
 
