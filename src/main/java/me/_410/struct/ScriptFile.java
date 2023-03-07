@@ -71,6 +71,18 @@ public class ScriptFile {
                 continue;
             }
 
+            // If line is importclass, then read the class file and add to imported
+            if (line.startsWith(Keywords.IMPORT_CLASS)) {
+                String name = line.substring(Keywords.IMPORT_CLASS.length() + 1);
+                String importPath = line.substring(Keywords.IMPORT_CLASS.length() + 1);
+                System.out.println("Script is importing class " + importPath);
+                importPath = libraryPath + "classes/" + importPath;
+                imported.add(new ScriptFile(importPath + ".zshclass", true, name));
+                System.out.println("Imported " + name + " as a single module.");
+                lines.set(i, "");
+                continue;
+            }
+
             // If line is import, then read library, add to imported and remove line
             if (line.startsWith(Keywords.IMPORT) && !line.endsWith(Keywords.IMPORT)) {
                 String name = line.substring(Keywords.IMPORT.length() + 1);

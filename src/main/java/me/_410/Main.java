@@ -13,7 +13,7 @@ public class Main {
     public static final String[] extensionI = {".zlang", ".zsh", ".sh", ".ebash"};
     public static final String extensionLib = ".ebsrc";
     public static final String extensionBase = ".zlangbase";
-    public static final String VERSION = "1.0.1 ";
+    public static final String VERSION = "1.1.0";
 
     public static boolean leaveComments = false;
     public static boolean leaveEmptyLines = false;
